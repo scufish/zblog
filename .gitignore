@@ -123,3 +123,4 @@ dmypy.json
 .pyre/
 migrations
 migrations
+/_credentials.py
