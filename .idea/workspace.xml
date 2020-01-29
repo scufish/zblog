@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04e12590-3e4f-4d4f-b8e9-fb92516e56b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/zblog/settings/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zblog/settings/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zblog/settings/local.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zblog/settings/production.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabfile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zblog/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zblog/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/zblog/wsgi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
