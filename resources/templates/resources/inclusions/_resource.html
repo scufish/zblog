@@ -1,0 +1,12 @@
+<div class="widget widget-category">
+  <h3 class="widget-title">资源</h3>
+  <ul>
+    {% for res in resources_list %}
+      <li>
+        <a href="{{res.href}}">{{ res.subject }} <span class="post-count">(13)</span></a>
+      </li>
+    {% empty %}
+      暂无资源！
+    {% endfor %}
+  </ul>
+</div>

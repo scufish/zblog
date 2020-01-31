@@ -25,10 +25,9 @@ def deploy(c):
     project_root_path = '~/apps/blog_zty/zblog'
     virtualenv_activate_path ='~/apps/blog_zty/bin'
 
-    # 先停止应用
-    with c.cd(supervisor_conf_path):
-        cmd = 'supervisorctl stop {}'.format(supervisor_program_name)
-        c.run(cmd)
+    # 先杀掉screen进程
+    with c.cd('~'):
+        pass
 
     # 进入项目根目录，从 Git 拉取最新代码
     with c.cd(project_root_path):
@@ -46,7 +45,6 @@ def deploy(c):
         c.run('python3 manage.py migrate')
         c.run('python3 manage.py collectstatic')
 
-    # 重新启动应用
+    # 重新启动screen
     with c.cd(supervisor_conf_path):
-        cmd = 'supervisorctl start {}'.format(supervisor_program_name)
-        c.run(cmd)
+        pass

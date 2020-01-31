@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from blog.models import Post,Category,Tag
+from blog.models import Post,Category,Tag,Message
 import markdown, re
-
+from  django.contrib import messages
 
 # Create your views here.
 
@@ -18,6 +18,7 @@ def index(req):
 def detail(req, pk):
     # 获取失败则返回404.html
     post = get_object_or_404(Post, pk=pk)
+    post.add_view()
     # 使用markdown解析body内容，这里使用了三个拓展，分别是 extra、codehilite、toc。extra 本身包含很多基础拓展，而 codehilite 是语法高亮拓展，这为后面的实现代码高亮功能提供基础，而
     # toc 则允许自动生成目录。
     # 注意markdown code代码块一定要缩进（四个空格）
@@ -65,3 +66,25 @@ def tag(req,num):
     return render(req,'blog/index.html',{
         'post_list': post_list
     })
+
+
+def about(req):
+    return render(req,'blog/about.html',{})
+
+
+def contact(req):
+    return render(req,'blog/contact.html',{})
+
+def resource(req):
+    return render(req,'blog/resource.html',{})
+
+def send_message(req):
+    q =req.POST
+    m =Message()
+    m.name = q['name']
+    m.email =q['email']
+    m.subject = q['subject']
+    m.message =q['message']
+    m.save()
+    messages.add_message(req, messages.SUCCESS, '消息发送成功', extra_tags='success')
+    return redirect('/')
