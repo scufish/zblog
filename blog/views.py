@@ -75,8 +75,7 @@ def about(req):
 def contact(req):
     return render(req,'blog/contact.html',{})
 
-def resource(req):
-    return render(req,'blog/resource.html',{})
+
 
 def send_message(req):
     q =req.POST

@@ -11,6 +11,5 @@ urlpatterns = [
     path('tags/<int:num>',views.tag,name='tag'),
     path('about/',views.about,name='about'),
     path('contact/',views.contact,name='contact'),
-    path('resource/',views.resource,name='resource'),
     path('send_message/',views.send_message,name='send_message'),
 ]
