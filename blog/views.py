@@ -1,16 +1,43 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from blog.models import Post,Category,Tag,Message
+from blog.models import Post, Category, Tag, Message
 import markdown, re
-from  django.contrib import messages
+from django.contrib import messages
+
 
 # Create your views here.
 
 # 首页视图函数
-def index(req):
+def index(req, pageNow=1):
     post_list = Post.object.all().order_by('-created_time')
+    count = len(post_list)
+    pageNum = count // 5 + 1
+    if pageNum-pageNow<=5:
+        pageList = range(pageNow,pageNum+1)
+
+    else:
+        pageList = [pageNow,pageNow+1,pageNow+2,'...',pageNum]
+
+    if pageNow * 5 > count:
+        post_list = post_list[pageNow * 5 - 5:count]
+    else:
+        post_list = post_list[pageNow * 5 - 5:pageNow * 5]
+    if pageNow-1>=1:
+        pagePre = pageNow-1
+    else:
+        pagePre = 1
+    if pageNow+1<=pageNum:
+        pageNext = pageNow+1
+    else:
+        pageNext =pageNum
     return render(req, 'blog/index.html', context={
-        'post_list': post_list
+        'post_list': post_list,
+        'pageList': pageList,
+        'pageNum':pageNum,
+        'pagePre':pagePre,
+        'pageNext':pageNext
+
+
     })
 
 
@@ -47,43 +74,47 @@ def detail(req, pk):
 
 
 def archive(req, year, month):
-    post_list = Post.object.filter(created_time__year=year,created_time__month =month).order_by('-created_time')
+    post_list = Post.object.filter(created_time__year=year, created_time__month=month).order_by('-created_time')
     return render(req, 'blog/index.html', {
         'post_list': post_list
     })
 
 
-def category(req,num):
+def category(req, num):
     cate = Category.object.get(pk=num)
     post_list = Post.object.filter(category=cate).order_by('-created_time')
-    return render(req,'blog/index.html',{
+    return render(req, 'blog/index.html', {
         'post_list': post_list
     })
 
-def tag(req,num):
-    t =Tag.object.get(pk=num)
+
+def tag(req, num):
+    t = Tag.object.get(pk=num)
     post_list = Post.object.filter(tags=t).order_by('-created_time')
-    return render(req,'blog/index.html',{
+    return render(req, 'blog/index.html', {
         'post_list': post_list
     })
 
 
 def about(req):
-    return render(req,'blog/about.html',{})
+    return render(req, 'blog/about.html', {})
 
 
 def contact(req):
-    return render(req,'blog/contact.html',{})
-
+    return render(req, 'blog/contact.html', {})
 
 
 def send_message(req):
-    q =req.POST
-    m =Message()
+    q = req.POST
+    m = Message()
     m.name = q['name']
-    m.email =q['email']
+    m.email = q['email']
     m.subject = q['subject']
-    m.message =q['message']
+    m.message = q['message']
     m.save()
     messages.add_message(req, messages.SUCCESS, '消息发送成功', extra_tags='success')
     return redirect('/')
+
+
+def redirectToIndex (req):
+    return redirect('/1')

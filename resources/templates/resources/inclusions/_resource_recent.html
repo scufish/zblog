@@ -1,7 +1,7 @@
 <ul>
-    {%for req in resources_list%}
+    {%for res in resources_list%}
         <li>
-            <a href="{{req.href}}">{{req.subject}}</a>
+            <a href="{{res.href}}">{{res.subject}}</a><span>||😘来源：{{res.author}}||分类：{{res.tag}}||提取码：{{res.key}} </span>
         </li>
     {%empty%}
         暂无资源

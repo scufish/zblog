@@ -32,3 +32,5 @@ def show_tags(context):
     return {
         'tag_list': Tag.object.annotate(post_num=Count('post'))
     }
+
+

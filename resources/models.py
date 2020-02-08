@@ -18,8 +18,10 @@ class PrivateUser(models.Model):
 class Resource(models.Model):
     subject = models.CharField(max_length=100)
     href = models.URLField()
-    created_time = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(auto_now_add=True,blank=True)
     author = models.ForeignKey(PrivateUser,on_delete=models.CASCADE,verbose_name='提供者',default='')
+    tag =models.CharField(default='others' ,max_length=15)
+    key =models.CharField(blank=True,max_length=8)
     object = models.Manager()
 
     class Meta:

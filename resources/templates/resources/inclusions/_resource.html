@@ -3,7 +3,7 @@
   <ul>
     {% for res in resources_list %}
       <li>
-        <a href="{{res.href}}">{{ res.subject }} <span class="post-count">(13)</span></a>
+        <a href="{{res.href}}">{{ res.subject }} ||👌来源：{{res.author}}||分类：{{res.tag}}||提取码：{{res.key}}</a>
       </li>
     {% empty %}
       暂无资源！

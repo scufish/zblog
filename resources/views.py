@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from resources.models import PrivateUser
+from resources.models import PrivateUser ,Resource
 from django.contrib import messages
 
 
@@ -96,3 +96,36 @@ def register(req):
     except:
         messages.add_message(req, messages.ERROR, '出现错误', extra_tags='error')
         return redirect('/resource_signin')
+
+
+
+def submit(req):
+    Info = req.POST
+    subject  =Info.get('subject')
+    href = Info.get('href')
+    tag = Info.get('tag')
+    key =Info.get('key')
+    if req.session.has_key('isLogin'):
+        username = req.session.get('username')
+        try:
+            author =PrivateUser.object.get(username=username)
+        except:
+            messages.add_message(req, messages.ERROR, '提交失败', extra_tags='error')
+            return redirect('/resource')
+        newResource = Resource()
+        try:
+            newResource.key=key
+            newResource.author=author
+            newResource.subject=subject
+            newResource.href=href
+            newResource.tag=tag
+            newResource.save()
+        except:
+            messages.add_message(req, messages.ERROR, '提交失败', extra_tags='error')
+            return redirect('/resource')
+        messages.add_message(req, messages.ERROR, '提交成功！', extra_tags='success')
+        return redirect('/resource')
+    else:
+        messages.add_message(req, messages.ERROR, '提交失败', extra_tags='error')
+        return redirect('/resource')
+
