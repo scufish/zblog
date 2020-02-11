@@ -1,9 +1,19 @@
 from django.shortcuts import render, redirect
 from resources.models import PrivateUser ,Resource
 from django.contrib import messages
-
+from functools import wraps
 
 # Create your views here.
+
+#检验用户是否具有登陆权限装饰器
+# def resource_decorate(f):
+#     @wraps(f)
+#     def wrap_if_signin(req,*args,**kwargs):
+#         if req.session.has_key('isLogin'):
+#             return redirect('/resource')
+#         else:
+#             f()
+#     return wrap_if_signin
 
 
 def resource_signin(req):

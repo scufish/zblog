@@ -24,33 +24,57 @@
                     <div class="col-md-12 column">
                         <div class="row clearfix">
                             <div class="col-md-8 column">
-                                <h3 class="text-center text-info">
-                                     <a href="{{post.get_absolute_url}}">{{post.title}}</a>-->
-                                </h3>
+                                <div class="entry-content clearfix">
+                                  <div class="read-more cl-effect-14">
+                                    <a href="{{post.get_absolute_url}}" class="more-link">{{post.title}} </a>
+                                  </div>
+                                </div>
+<!--                                <h3 class="text-center text-info">-->
+<!--                                     <a href="{{post.get_absolute_url}}">{{post.title}}</a>&ndash;&gt;-->
+<!--                                </h3>-->
                                 <blockquote>
                                     <p>
                                        {{ post.excerpt }}
                                     </p> <small><cite>{{post.author}}</cite></small>
                                 </blockquote>
+
                             </div>
                             <div class="col-md-4 column" id="post_label">
 
-                                 <div class="label label-info">分类：{{ post.category.name }}</div>
-                                 <div class="label label-danger">评论数：{{post.comment_set.count}}</div>
-                                <div class="label label-success ">阅读量：{{post.view}}</div>
-                                 <div class="label label-primary">创建时间：{{ post.created_time }}</div>
-                                <div class="entry-content clearfix">
-                              <div class="read-more cl-effect-14">
-                            <a href="{{post.get_absolute_url}}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                            </div>
-                        </div>
+<!--                                 <div class="label label-info">分类：{{ post.category.name }}</div>-->
+<!--                                 <div class="label label-danger">评论数：{{post.comment_set.count}}</div>-->
+<!--                                <div class="label label-success ">阅读量：{{post.view}}</div>-->
+<!--                                 <div class="label label-primary">创建时间：{{ post.created_time }}</div>-->
+                                <div class="widget widget-tag-cloud">
+                                  <ul>
+                                      <li>
+                                        分类：{{ post.category.name }}
+                                      </li>
+                                      <li>
+                                        评论数：{{post.comment_set.count}}
+                                      </li>
+                                      <li>
+                                        阅读量：{{post.view}}
+                                      </li>
+
+                                      <li>
+                                        创建时间：{{ post.created_time }}
+                                      </li>
+                                  </ul>
+                                </div>
+
+
+
 
                             </div>
+
                         </div>
 
                     </div>
 
 	</div>
+
+
      {% empty %}
                     <div class="no-post">暂时没有文章</div>
      {% endfor%}
