@@ -14,7 +14,7 @@
                         </div>
                     </header>
                     <div class="entry-content clearfix">
-                       {{post.body|safe}}
+                       {{post.body_html|safe}}
                     </div>
                 </article>
                 <section class="comment-area" id="comment-area">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    <a href="{%url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
 {% endblock toc %}
 

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from blog.models import Post, Category, Tag, Message
@@ -60,14 +61,16 @@ def detail(req, pk):
 
     # 第二个版本：先创建Markdown类的对象并传入相关参数，接着使用对象的convert方法返回html文件。
     # 该对象还保存了toc属性，便于生成目录
-    md = markdown.Markdown(extensions=[
-        'markdown.extensions.extra',
-        'markdown.extensions.codehilite',
-        'markdown.extensions.toc', ])
-    post.body = md.convert(post.body)
-    # 注意这个 post 实例本身是没有 toc 属性的，我们给它动态添加了 toc 属性，这就是 Python 动态语言的好处
-    m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
-    post.toc = m.group(1) if m is not None else ''
+    # md = markdown.Markdown(extensions=[
+    #     'markdown.extensions.extra',
+    #     'markdown.extensions.codehilite',
+    #     'markdown.extensions.toc', ])
+    # post.body = md.convert(post.body)
+    # # 注意这个 post 实例本身是没有 toc 属性的，我们给它动态添加了 toc 属性，这就是 Python 动态语言的好处
+    # m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
+    # post.toc = m.group(1) if m is not None else ''
+
+    #版本三：将这些包装为方法 在模型中。
     return render(req, 'blog/detail.html', context={
         'post': post
     })
@@ -118,3 +121,18 @@ def send_message(req):
 
 def redirectToIndex (req):
     return redirect('/1')
+
+
+def search(req):
+    return render(req,'blog/search.html',{})
+
+
+def search_result(req):
+    search = req.GET.get('search')
+    if not search:
+        messages.add_message(req, messages.ERROR, "请输入关键字", extra_tags='danger')
+        return redirect('blog:search')
+    post_list=Post.object.filter(Q(title__icontains=search)|Q(body__icontains=search))
+    return render(req,'blog/index.html',{
+        'post_list':post_list
+    })
