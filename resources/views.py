@@ -49,7 +49,7 @@ def resource(req):
     try:
         user = PrivateUser.object.get(username=Info['username'])
     except:
-        messages.add_message(req, messages.ERROR, '用户名或者密码错误', extra_tags='success')
+        messages.add_message(req, messages.ERROR, '用户名或者密码错误', extra_tags='danger')
         return redirect('/resource_signin')
     if user is not None:
         if Info['password'] == user.password:
@@ -64,7 +64,7 @@ def resource(req):
             req.session['username'] = user.username
             return res
         else:
-            messages.add_message(req, messages.ERROR, '用户名或者密码错误', extra_tags='error')
+            messages.add_message(req, messages.ERROR, '用户名或者密码错误', extra_tags='danger')
             return redirect('/resource_signin')
 
 
@@ -79,20 +79,20 @@ def register(req):
     email = Info.get('email')
     key = Info.get('key')
     if pass1 is None or pass2 is None or username is None or email is None or key is None:
-        messages.add_message(req, messages.ERROR, '出现错误', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '出现错误', extra_tags='danger')
         return redirect('/debug')
     if pass1 != pass2:
-        messages.add_message(req, messages.ERROR, '两次密码不一致', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '两次密码不一致', extra_tags='danger')
         return redirect('/resource_signin')
     try:
         U=PrivateUser.object.get(username=username)
-        messages.add_message(req, messages.ERROR, '该用户名已经被占用了', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '该用户名已经被占用了', extra_tags='danger')
         return redirect('/resource_signin')
     except:
         pass
 
     if key != '201510':
-        messages.add_message(req, messages.ERROR, '通关密文不正确', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '通关密文不正确', extra_tags='danger')
         return redirect('/resource_signin')
 
     newUser = PrivateUser()
@@ -104,7 +104,7 @@ def register(req):
         messages.add_message(req, messages.ERROR, '注册成功！', extra_tags='success')
         return redirect('/resource_signin')
     except:
-        messages.add_message(req, messages.ERROR, '出现错误', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '出现错误', extra_tags='danger')
         return redirect('/resource_signin')
 
 
@@ -131,11 +131,11 @@ def submit(req):
             newResource.tag=tag
             newResource.save()
         except:
-            messages.add_message(req, messages.ERROR, '提交失败', extra_tags='error')
+            messages.add_message(req, messages.ERROR, '提交失败', extra_tags='danger')
             return redirect('/resource')
         messages.add_message(req, messages.ERROR, '提交成功！', extra_tags='success')
         return redirect('/resource')
     else:
-        messages.add_message(req, messages.ERROR, '提交失败', extra_tags='error')
+        messages.add_message(req, messages.ERROR, '提交失败', extra_tags='danger')
         return redirect('/resource')
 
